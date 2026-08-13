@@ -6,10 +6,10 @@ namespace HybridFramework.Dotnet.Pages.Mobile;
 /// <summary>Android Settings app search screen - no custom APK required to run this sample.</summary>
 public class SettingsScreen : BaseScreen
 {
-    private static readonly By SearchIcon = AppiumBy.AccessibilityId("Search settings");
-    private static readonly By SearchBox = AppiumBy.AndroidUIAutomator(
+    private static readonly By SearchIcon = MobileBy.AccessibilityId("Search settings");
+    private static readonly By SearchBox = MobileBy.AndroidUIAutomator(
         "new UiSelector().resourceId(\"android:id/search_src_text\")");
-    private static readonly By ResultTitles = AppiumBy.AndroidUIAutomator(
+    private static readonly By ResultTitles = MobileBy.AndroidUIAutomator(
         "new UiSelector().resourceId(\"android:id/title\")");
 
     public SettingsScreen(IWebDriver driver) : base(driver)
