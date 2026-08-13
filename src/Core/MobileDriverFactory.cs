@@ -25,6 +25,15 @@ public static class MobileDriverFactory
         options.AddAdditionalAppiumOption("noReset", true);
         options.AddAdditionalAppiumOption("newCommandTimeout", Env.Mobile.NewCommandTimeoutSeconds);
 
-        return new AndroidDriver(new Uri(Env.Mobile.AppiumServerUrl), options);
+        var driver = new AndroidDriver(new Uri(Env.Mobile.AppiumServerUrl), options);
+        // appium:appPackage/appActivity alone don't reliably foreground a
+        // pre-installed system app like Settings on every UiAutomator2
+        // version - activate it explicitly so tests don't start on the
+        // home screen.
+        driver.ExecuteScript("mobile: startActivity", new Dictionary<string, object>
+        {
+            ["intent"] = $"{Env.Android.AppPackage}/{Env.Android.AppActivity}"
+        });
+        return driver;
     }
 }

@@ -23,4 +23,6 @@ public abstract class BaseScreen
         element.Clear();
         element.SendKeys(text);
     }
+
+    protected IReadOnlyList<IWebElement> FindAll(By locator) => Waits.AnyPresent(Driver, locator, DefaultTimeout);
 }
