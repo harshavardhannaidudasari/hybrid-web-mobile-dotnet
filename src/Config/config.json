@@ -1,0 +1,15 @@
+{
+  "Web": {
+    "BaseUrl": "https://www.saucedemo.com",
+    "Headless": false
+  },
+  "Mobile": {
+    "AppiumServerUrl": "http://127.0.0.1:4723",
+    "NewCommandTimeoutSeconds": 120
+  },
+  "Android": {
+    "DeviceName": "Android Emulator",
+    "AppPackage": "com.android.settings",
+    "AppActivity": ".Settings"
+  }
+}

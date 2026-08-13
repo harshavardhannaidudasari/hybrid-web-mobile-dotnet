@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  web-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - run: dotnet restore
+      - run: dotnet build --no-restore
+
+      - name: Install Playwright browsers
+        run: pwsh tests/bin/Debug/net8.0/playwright.ps1 install --with-deps chromium
+
+      - name: Run web scenarios (headless Chrome)
+        run: dotnet test --no-build --filter "TestCategory=web"
+        env:
+          HYBRID_WEB_HEADLESS: "true"
+        # Mobile scenarios need a running Appium server + device/emulator and
+        # are intentionally excluded from this job:
+        # dotnet test --filter "TestCategory=mobile"
