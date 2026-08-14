@@ -2,13 +2,15 @@ using HybridFramework.Dotnet.Config;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.iOS;
 
 namespace HybridFramework.Dotnet.Core;
 
 /// <summary>
 /// Playwright drives the web side of this framework directly (see
-/// tests/Hooks), so the only driver this factory needs to build is the
-/// Appium one for native mobile.
+/// tests/Hooks), so the only drivers this factory needs to build are the
+/// Appium ones for native mobile: Android against a local emulator, iOS
+/// against BrowserStack App Automate (no local Mac/simulator on this box).
 /// </summary>
 public static class MobileDriverFactory
 {
@@ -35,5 +37,34 @@ public static class MobileDriverFactory
             ["intent"] = $"{Env.Android.AppPackage}/{Env.Android.AppActivity}"
         });
         return driver;
+    }
+
+    /// <summary>
+    /// Builds an iOS session against BrowserStack App Automate using modern
+    /// W3C capabilities (nested "bstack:options"), targeting BrowserStack's
+    /// public "BStackSampleApp" demo app. Credentials/app id come from
+    /// Env.Ios, which reads the plain BROWSERSTACK_* env vars BrowserStack's
+    /// own docs use, in addition to this project's HYBRID_* override convention.
+    /// </summary>
+    public static IWebDriver CreateIosDriver()
+    {
+        var options = new AppiumOptions
+        {
+            PlatformName = "iOS",
+            DeviceName = Env.Ios.DeviceName,
+            PlatformVersion = Env.Ios.PlatformVersion,
+            App = Env.Ios.AppId
+        };
+        options.AddAdditionalAppiumOption("bstack:options", new Dictionary<string, object>
+        {
+            ["userName"] = Env.Ios.BrowserStackUsername,
+            ["accessKey"] = Env.Ios.BrowserStackAccessKey,
+            ["projectName"] = "Hybrid Web+Mobile Dotnet",
+            ["buildName"] = "iOS BrowserStack",
+            ["sessionName"] = "iOS BrowserStack sample text roundtrip",
+            ["debug"] = true
+        });
+
+        return new IOSDriver(new Uri(Env.Ios.HubUrl), options);
     }
 }

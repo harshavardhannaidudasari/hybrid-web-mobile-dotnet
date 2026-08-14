@@ -53,4 +53,19 @@ public class Hooks
     {
         _mobileContext.Driver?.Quit();
     }
+
+    // Kept as its own "ios" tag rather than folded into "mobile" so Android
+    // (local emulator) and iOS (BrowserStack) scenarios stay independently
+    // selectable/runnable via --filter.
+    [BeforeScenario("ios")]
+    public void BeforeIosScenario()
+    {
+        _mobileContext.Driver = MobileDriverFactory.CreateIosDriver();
+    }
+
+    [AfterScenario("ios")]
+    public void AfterIosScenario()
+    {
+        _mobileContext.Driver?.Quit();
+    }
 }

@@ -11,5 +11,13 @@
     "DeviceName": "Android Emulator",
     "AppPackage": "com.android.settings",
     "AppActivity": ".Settings"
+  },
+  "Ios": {
+    "DeviceName": "iPhone 14",
+    "PlatformVersion": "16",
+    "HubUrl": "https://hub-cloud.browserstack.com/wd/hub",
+    "AppId": "",
+    "BrowserStackUsername": "",
+    "BrowserStackAccessKey": ""
   }
 }

@@ -6,7 +6,7 @@ namespace HybridFramework.Dotnet.Pages.Mobile;
 public abstract class BaseScreen
 {
     protected readonly IWebDriver Driver;
-    private static readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(15);
+    protected virtual TimeSpan DefaultTimeout => TimeSpan.FromSeconds(15);
 
     protected BaseScreen(IWebDriver driver)
     {
