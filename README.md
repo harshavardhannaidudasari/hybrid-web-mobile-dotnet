@@ -1,5 +1,7 @@
 # Hybrid Web + Mobile Automation Framework (.NET)
 
+[![CI](https://github.com/harshavardhannaidudasari/hybrid-web-mobile-dotnet/actions/workflows/ci.yml/badge.svg)](https://github.com/harshavardhannaidudasari/hybrid-web-mobile-dotnet/actions/workflows/ci.yml)
+
 A single Reqnroll (Gherkin/BDD) + MSTest suite that drives **both** browser
 (Playwright) and native mobile (Appium) scenarios. The `@web` / `@mobile`
 tag on each feature decides which driver `Hooks.cs` stands up before the
